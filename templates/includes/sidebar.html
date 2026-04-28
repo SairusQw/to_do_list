@@ -1,0 +1,26 @@
+<div class="sidebar d-flex flex-column shadow border-end">
+  <div class="p-4 border-bottom border-secondary bg-dark">
+    <h4 class="text-white mb-0 fw-bold">
+      <i class="bi bi-rocket-takeoff-fill text-primary me-2"></i>Todo App
+    </h4>
+  </div>
+
+  <nav class="nav flex-column mt-3">
+    <a href="{% url 'todo:index' %}"
+       class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %} d-flex align-items-center">
+      <i class="bi bi-grid-1x2-fill me-3"></i> Головна
+    </a>
+    <a href="{% url 'todo:task_list' %}"
+       class="nav-link {% if 'task' in request.resolver_match.url_name %}active{% endif %} d-flex align-items-center">
+      <i class="bi bi-clipboard2-check-fill me-3"></i> Задачі
+    </a>
+    <a href="{% url 'todo:tag_list' %}"
+       class="nav-link {% if 'tag' in request.resolver_match.url_name %}active{% endif %} d-flex align-items-center">
+      <i class="bi bi-tags-fill me-3"></i> Теги
+    </a>
+  </nav>
+
+  <div class="mt-auto p-3 border-top border-secondary opacity-50">
+    <small class="text-white"><i class="bi bi-code-slash me-2"></i>v1.0 Developer</small>
+  </div>
+</div>

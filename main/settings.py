@@ -110,7 +110,11 @@ LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
-USE_I18N = True
+USE_L10N = False
+DATETIME_INPUT_FORMATS = [
+    '%Y-%m-%dT%H:%M',
+    '%Y-%m-%d %H:%M:%S',
+]
 
 USE_TZ = True
 
@@ -119,6 +123,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 CRISPY_TEMPLATE_PACK="bootstrap5"
 
