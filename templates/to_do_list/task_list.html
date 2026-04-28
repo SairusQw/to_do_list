@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1>Мої задачі</h1>
+      <a href="{% url 'todo:task_create' %}" class="btn btn-primary shadow-sm px-4">
+        <i class="bi bi-plus-circle-fill me-2"></i>Створити задачу</a>
+    </div>
+
+    {% for task in task_list %}
+      <div class="card mb-3 shadow-sm {% if task.mark %}bg-light border-success{% endif %}">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-7">
+              <h5 class="card-title">
+                {% if task.mark %}
+                  <del class="text-muted">{{ task.content }}</del>
+                  <span class="badge bg-success ms-2">Виконано</span>
+                {% else %}
+                  {{ task.content }}
+                {% endif %}
+              </h5>
+
+              <div class="mt-2">
+                <small class="text-muted me-3">
+                  <i class="bi bi-calendar-plus"></i> {{ task.datetime|date:"d.m.Y H:i" }}
+                </small>
+
+                {% if task.deadline %}
+                  <span class="badge bg-danger">
+                    {{ task.deadline|date:"d.m.Y H:i" }}
+                  </span>
+                {% else %}
+                  <span class="badge bg-light text-muted border">Без дедлайну</span>
+                {% endif %}
+              </div>
+
+              <div class="mt-2">
+                {% for tag in task.tags.all %}
+                  <span class="badge border text-dark me-1 bg-white">{{ tag.name }}</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="col-md-5 text-end">
+              <form action="{% url 'todo:task-toggle-mark' pk=task.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit"
+                        class="btn {% if task.mark %}btn-outline-secondary{% else %}btn-success{% endif %} btn-sm rounded-pill px-3">
+                  {% if task.mark %}<i class="bi bi-arrow-counterclockwise"></i>Скасувати
+                  {% else %}
+                    <i class="bi bi-check2-all me-1"></i>Виконати
+                  {% endif %}
+                </button>
+              </form>
+              <a href="{% url 'todo:task-update' pk=task.id %}"
+                 class="btn btn-light btn-sm rounded-circle ms-1 shadow-sm"><i class="bi bi-pencil-square text-primary"></i>Редагувати</a>
+              <a href="{% url 'todo:task-delete' pk=task.id %}" class="btn btn-light btn-sm rounded-circle ms-1 shadow-sm"><i class="bi bi-trash3 text-danger"></i>Видалити</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="text-center py-5">
+        <p class="text-muted">Задач поки немає.</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

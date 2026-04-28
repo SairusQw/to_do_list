@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="card border-danger mx-auto" style="max-width: 500px;">
+      <div class="card-body text-center">
+        <h3 class="card-title text-danger">Видалити задачу?</h3>
+        <p class="card-text">Ви впевнені, що хочете видалити: <strong>"{{ object.content }}"</strong>?</p>
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger px-4">Так, видалити</button>
+          <a href="{% url 'todo:task_list' %}" class="btn btn-secondary px-4">Скасувати</a>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
